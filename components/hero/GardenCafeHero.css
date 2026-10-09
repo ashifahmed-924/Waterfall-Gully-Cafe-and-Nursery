@@ -1,0 +1,1003 @@
+/* ─── Cinematic Garden + Café hero ───────────────────────────────────────── */
+
+.gch-hero {
+  --hero-cream: #f3efe6;
+  --hero-espresso: #2a1f18;
+  --hero-forest: #1e3329;
+  --hero-gold: #c9953a;
+  --hero-leaf: #3a6b52;
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  width: 100%;
+  overflow: clip;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(58, 107, 82, 0.35), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 80% 40%, rgba(42, 31, 24, 0.55), transparent 50%),
+    linear-gradient(160deg, #1a2e24 0%, #243028 45%, #1c1612 100%);
+  color: var(--chalk);
+}
+
+.gch-ambientLight {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  mix-blend-mode: soft-light;
+  transition: opacity 0.4s ease;
+}
+
+/* ─── Navbar ─────────────────────────────────────────────────────────────── */
+
+.gch-navbar {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 50;
+  padding: 0.85rem 1rem 0;
+  pointer-events: none;
+}
+
+.gch-navInner {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(100%, 1180px);
+  margin-inline: auto;
+  padding: 0.65rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+
+.gch-navbarScrolled .gch-navInner {
+  border-color: color-mix(in srgb, var(--juniper) 14%, transparent);
+  background: color-mix(in srgb, var(--chalk) 92%, transparent);
+  box-shadow: 0 14px 36px -18px rgb(30 51 41 / 0.35);
+  backdrop-filter: blur(16px);
+}
+
+.gch-navLinks {
+  display: none;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.gch-hero a.gch-navLink, .gch-navbar a.gch-navLink {
+  display: inline-flex;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--chalk) 92%, transparent);
+  font-family: var(--font-utility);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.gch-navLink:hover {
+  background: color-mix(in srgb, var(--chalk) 12%, transparent);
+  color: var(--chalk);
+}
+
+.gch-navLinkDark {
+  color: var(--juniper-dark);
+}
+
+.gch-navLinkDark:hover {
+  background: color-mix(in srgb, var(--pale-celadon) 80%, transparent);
+  color: var(--juniper-dark);
+}
+
+.gch-navActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.gch-navVisitWrap {
+  display: none;
+}
+
+.gch-navbar a.gch-navVisit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border: 1.5px solid color-mix(in srgb, var(--chalk) 70%, transparent);
+  border-radius: 999px;
+  color: var(--chalk);
+  font-family: var(--font-utility);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.gch-navVisit:hover {
+  background: color-mix(in srgb, var(--chalk) 14%, transparent);
+  border-color: var(--chalk);
+  color: var(--chalk);
+}
+
+.gch-navVisitDark {
+  border-color: color-mix(in srgb, var(--juniper) 35%, transparent);
+  color: var(--juniper-dark);
+}
+
+.gch-navVisitDark:hover {
+  background: var(--pale-celadon);
+  border-color: var(--juniper);
+  color: var(--juniper-dark);
+}
+
+.gch-navMenuBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--chalk) 30%, transparent);
+  background: color-mix(in srgb, var(--juniper-dark) 35%, transparent);
+  color: var(--chalk);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.gch-navMenuBtnDark {
+  border-color: color-mix(in srgb, var(--juniper) 20%, transparent);
+  background: color-mix(in srgb, var(--chalk) 80%, transparent);
+  color: var(--juniper-dark);
+}
+
+/* ─── Stage / scenes ─────────────────────────────────────────────────────── */
+
+.gch-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding-top: 4.5rem;
+  padding-bottom: 7.5rem;
+}
+
+.gch-scene {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 48svh;
+  overflow: hidden;
+  transition: filter 0.45s ease, opacity 0.45s ease;
+}
+
+.gch-sceneEmphasized {
+  z-index: 2;
+}
+
+.gch-focusGarden .gch-coffeeScene {
+  filter: saturate(0.85) brightness(0.88);
+  opacity: 0.92;
+}
+
+.gch-focusCoffee .gch-gardenScene {
+  filter: saturate(0.85) brightness(0.88);
+  opacity: 0.92;
+}
+
+.gch-sceneMedia {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.gch-parallaxLayer {
+  position: absolute;
+  inset: -6%;
+  will-change: transform;
+}
+
+.gch-sceneImage {
+  object-fit: cover;
+  transform: scale(1.04);
+}
+
+.gch-gardenVeil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      180deg,
+      rgb(30 51 41 / 0.45) 0%,
+      rgb(30 51 41 / 0.18) 35%,
+      rgb(30 51 41 / 0.55) 100%
+    ),
+    radial-gradient(ellipse at 30% 40%, transparent 20%, rgb(30 51 41 / 0.35) 100%);
+}
+
+.gch-coffeeVeil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      200deg,
+      rgb(26 18 14 / 0.42) 0%,
+      rgb(42 31 24 / 0.16) 42%,
+      rgb(26 18 14 / 0.5) 100%
+    ),
+    radial-gradient(ellipse at 68% 42%, transparent 18%, rgb(26 18 14 / 0.28) 100%);
+}
+
+.gch-sunRays {
+  position: absolute;
+  inset: -10% 20% auto -10%;
+  height: 70%;
+  z-index: 2;
+  background: conic-gradient(
+    from 210deg at 30% 0%,
+    transparent 0deg,
+    rgba(247, 246, 242, 0.12) 18deg,
+    transparent 36deg,
+    rgba(201, 149, 58, 0.1) 52deg,
+    transparent 78deg
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.gch-warmLight {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    radial-gradient(
+      ellipse 50% 40% at 65% 35%,
+      rgba(201, 149, 58, 0.28),
+      transparent 70%
+    );
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  background-size: 140% 140%;
+}
+
+.gch-foregroundFoliage {
+  position: absolute;
+  left: -4%;
+  bottom: -8%;
+  width: 42%;
+  height: 55%;
+  z-index: 3;
+  background:
+    radial-gradient(ellipse at 30% 80%, rgba(58, 107, 82, 0.55), transparent 60%),
+    radial-gradient(ellipse at 60% 90%, rgba(30, 51, 41, 0.5), transparent 55%);
+  filter: blur(0.5px);
+  pointer-events: none;
+  transform-origin: bottom left;
+}
+
+.gch-particleLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gch-particle {
+  position: absolute;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--chalk) 80%, var(--safflower));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--chalk) 40%, transparent);
+  will-change: transform, opacity;
+}
+
+.gch-steamLayer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 18%;
+  height: 42%;
+  z-index: 4;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.gch-steamRibbon {
+  position: absolute;
+  bottom: 0;
+  width: 28px;
+  height: 90px;
+  margin-left: -14px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 246, 242, 0) 0%,
+    rgba(247, 246, 242, 0.45) 35%,
+    rgba(247, 246, 242, 0.15) 100%
+  );
+  filter: blur(6px);
+  transform-origin: bottom center;
+  will-change: transform, opacity;
+}
+
+.gch-beanAccent {
+  position: absolute;
+  right: 6%;
+  bottom: 18%;
+  z-index: 4;
+  width: clamp(4.5rem, 12vw, 7.5rem);
+  opacity: 0.55;
+  pointer-events: none;
+  mix-blend-mode: luminosity;
+  filter: drop-shadow(0 8px 16px rgb(0 0 0 / 0.35));
+}
+
+.gch-beanImg {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  object-fit: cover;
+}
+
+/* ─── Scene copy ─────────────────────────────────────────────────────────── */
+
+.gch-sceneCopy {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.85rem;
+  max-width: 28rem;
+  min-height: 100%;
+  padding: 1.5rem 1.25rem 2rem;
+  pointer-events: none;
+}
+
+.gch-sceneCopy > * {
+  pointer-events: auto;
+}
+
+.gch-coffeeCopy {
+  margin-left: auto;
+  text-align: left;
+}
+
+.gch-overline {
+  margin: 0;
+  font-family: var(--font-utility);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--chalk) 82%, var(--safflower));
+}
+
+.gch-headline {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6.2vw, 3.35rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--chalk);
+  text-shadow: 0 10px 28px rgb(0 0 0 / 0.28);
+}
+
+.gch-headlineLine {
+  display: block;
+}
+
+.gch-wordMask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  margin-right: 0.28em;
+}
+
+.gch-wordInner {
+  display: inline-block;
+  will-change: transform;
+}
+
+.gch-body {
+  margin: 0;
+  max-width: 26rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.92rem, 1.6vw, 1.05rem);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--chalk) 88%, transparent);
+}
+
+.gch-scriptAccent {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-script);
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  color: color-mix(in srgb, var(--chalk) 78%, var(--safflower));
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.gch-scriptCoffee {
+  align-self: flex-start;
+}
+
+/* ─── CTAs ───────────────────────────────────────────────────────────────── */
+
+.gch-ctaWrap {
+  display: inline-flex;
+  width: fit-content;
+}
+
+.gch-hero a.gch-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.35rem;
+  border-radius: 999px;
+  font-family: var(--font-utility);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.gch-ctaIcon {
+  flex-shrink: 0;
+}
+
+.gch-ctaArrow {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.gch-hero a.gch-cta:hover .gch-ctaArrow {
+  transform: translateX(3px);
+}
+
+.gch-hero a.gch-ctaGhost {
+  border: 1.5px solid color-mix(in srgb, var(--chalk) 72%, transparent);
+  background: color-mix(in srgb, var(--juniper-dark) 38%, transparent);
+  color: var(--chalk);
+  backdrop-filter: blur(10px);
+}
+
+.gch-hero a.gch-ctaGhost:hover {
+  border-color: var(--chalk);
+  background: color-mix(in srgb, var(--juniper-dark) 55%, transparent);
+  color: var(--chalk);
+}
+
+.gch-hero a.gch-ctaSolid {
+  border: 1.5px solid var(--hero-cream);
+  background: var(--hero-cream);
+  color: var(--hero-espresso);
+  box-shadow: 0 12px 28px -14px rgb(0 0 0 / 0.45);
+}
+
+.gch-hero a.gch-ctaSolid:hover {
+  background: #fffaf1;
+  border-color: #fffaf1;
+  color: var(--hero-espresso);
+  box-shadow: 0 16px 32px -14px rgb(0 0 0 / 0.5);
+}
+
+/* ─── Organic divider + emblem ───────────────────────────────────────────── */
+
+.gch-divider {
+  display: none;
+  pointer-events: none;
+}
+
+.gch-dividerSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.gch-floatLeaf,
+.gch-floatFlower {
+  position: absolute;
+  z-index: 6;
+  color: var(--hero-leaf);
+  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.25));
+  will-change: transform;
+}
+
+.gch-floatLeaf svg,
+.gch-floatFlower svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.gch-leafOne {
+  top: 18%;
+  left: calc(50% - 1.6rem);
+  width: 2.4rem;
+  height: 3.1rem;
+  color: #4f8a68;
+}
+
+.gch-leafTwo {
+  top: 58%;
+  left: calc(50% + 0.4rem);
+  width: 2rem;
+  height: 2.7rem;
+  color: #2f5c44;
+}
+
+.gch-leafThree {
+  top: 78%;
+  left: calc(50% - 2.2rem);
+  width: 1.7rem;
+  height: 2.3rem;
+  color: #6a9a78;
+}
+
+.gch-flowerOne {
+  top: 34%;
+  left: calc(50% + 0.8rem);
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.gch-flowerTwo {
+  top: 68%;
+  left: calc(50% - 2.4rem);
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.gch-emblem {
+  display: none;
+}
+
+.gch-emblemRing {
+  position: absolute;
+  inset: 0;
+}
+
+.gch-emblemSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.gch-emblemText {
+  fill: color-mix(in srgb, var(--chalk) 78%, transparent);
+  font-family: var(--font-utility);
+  font-size: 8.2px;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.gch-emblemCore {
+  position: absolute;
+  inset: 22%;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 30%, #4a7d60, #1e3329 70%);
+  color: var(--chalk);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--chalk) 18%, transparent);
+}
+
+/* ─── Bottom bar ─────────────────────────────────────────────────────────── */
+
+.gch-bottomBar {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 2.75rem;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: min(100% - 2rem, 1180px);
+  margin-inline: auto;
+  pointer-events: none;
+}
+
+.gch-bottomBar > * {
+  pointer-events: auto;
+}
+
+.gch-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gch-feature {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-utility);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--chalk) 82%, transparent);
+}
+
+.gch-featureIcon {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--juniper-dark) 45%, transparent);
+  color: var(--pale-celadon);
+  border: 1px solid color-mix(in srgb, var(--chalk) 18%, transparent);
+}
+
+.gch-mediaControls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.gch-mediaLabel {
+  margin: 0;
+  font-family: var(--font-utility);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--chalk) 72%, transparent);
+}
+
+.gch-mediaRow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.gch-thumbs {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gch-thumb {
+  position: relative;
+  width: 2.35rem;
+  height: 3.15rem;
+  overflow: hidden;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--chalk) 25%, transparent);
+  box-shadow: 0 8px 18px -12px rgb(0 0 0 / 0.55);
+}
+
+.gch-thumbImg {
+  object-fit: cover;
+}
+
+.gch-playBtn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1.5px solid color-mix(in srgb, var(--chalk) 55%, transparent);
+  background: color-mix(in srgb, var(--juniper-dark) 50%, transparent);
+  color: var(--chalk);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.gch-playBtn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--juniper-dark) 70%, transparent);
+  border-color: var(--chalk);
+}
+
+.gch-playBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.gch-bottomWave {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  z-index: 9;
+  height: clamp(3.5rem, 8vw, 5.5rem);
+  pointer-events: none;
+}
+
+.gch-bottomWave svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Tablet+ ────────────────────────────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .gch-stage {
+    padding-bottom: 8.5rem;
+  }
+
+  .gch-scene {
+    min-height: 44svh;
+  }
+
+  .gch-sceneCopy {
+    padding: 2rem 2.25rem;
+    max-width: 30rem;
+  }
+
+  .gch-headline {
+    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  }
+
+  .gch-bottomBar {
+    flex-direction: row;
+    align-items: flex-end;
+    bottom: 3.25rem;
+  }
+
+  .gch-mediaControls {
+    align-items: flex-end;
+  }
+}
+
+/* ─── Desktop two-region sculptural layout ───────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .gch-navInner {
+    grid-template-columns: 1fr auto 1fr;
+    padding: 0.7rem 1.1rem;
+  }
+
+  .gch-navLinks {
+    display: flex;
+  }
+
+  .gch-navVisitWrap {
+    display: block;
+  }
+
+  .gch-navMenuBtn {
+    display: none;
+  }
+
+  .gch-stage {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 100svh;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .gch-scene {
+    flex: 1 1 50%;
+    min-height: 100svh;
+    width: 50%;
+  }
+
+  .gch-gardenScene {
+    width: 56%;
+    flex: 0 0 56%;
+    clip-path: polygon(
+      0% 0%,
+      88% 0%,
+      90% 8%,
+      86% 16%,
+      91% 28%,
+      85% 40%,
+      90% 50%,
+      84% 60%,
+      89% 72%,
+      85% 84%,
+      90% 100%,
+      0% 100%
+    );
+  }
+
+  .gch-coffeeScene {
+    margin-left: -8%;
+    width: 52%;
+    flex: 0 0 52%;
+    clip-path: polygon(
+      12% 0%,
+      100% 0%,
+      100% 100%,
+      10% 100%,
+      15% 84%,
+      11% 72%,
+      16% 60%,
+      10% 50%,
+      15% 40%,
+      9% 28%,
+      14% 16%,
+      10% 8%
+    );
+  }
+
+  .gch-sceneCopy {
+    max-width: 26rem;
+    padding-inline: clamp(1.5rem, 4vw, 3.5rem);
+    padding-block: 6.5rem 8rem;
+  }
+
+  .gch-gardenScene .gch-sceneCopy {
+    padding-right: 3rem;
+  }
+
+  .gch-coffeeScene .gch-sceneCopy {
+    margin-left: auto;
+    padding-left: 4.5rem;
+    padding-right: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .gch-divider {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 46%;
+    width: 8%;
+    z-index: 6;
+  }
+
+  .gch-emblem {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    z-index: 7;
+    width: clamp(5.5rem, 8vw, 7rem);
+    height: clamp(5.5rem, 8vw, 7rem);
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: radial-gradient(circle at 40% 30%, #355f48, #15241d 72%);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--chalk) 18%, transparent),
+      0 18px 40px -16px rgb(0 0 0 / 0.55);
+    cursor: default;
+  }
+
+  .gch-bottomBar {
+    bottom: 3.75rem;
+  }
+
+  .gch-thumb {
+    width: 2.65rem;
+    height: 3.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .gch-headline {
+    font-size: clamp(3rem, 3.6vw, 3.85rem);
+  }
+
+  .gch-gardenScene {
+    width: 55%;
+    flex: 0 0 55%;
+    clip-path: polygon(
+      0% 0%,
+      87% 0%,
+      89% 7%,
+      85% 15%,
+      90% 27%,
+      84% 39%,
+      89% 50%,
+      83% 61%,
+      88% 73%,
+      84% 85%,
+      89% 100%,
+      0% 100%
+    );
+  }
+
+  .gch-coffeeScene {
+    margin-left: -7%;
+    width: 52%;
+    flex: 0 0 52%;
+    clip-path: polygon(
+      13% 0%,
+      100% 0%,
+      100% 100%,
+      11% 100%,
+      16% 85%,
+      12% 73%,
+      17% 61%,
+      11% 50%,
+      16% 39%,
+      10% 27%,
+      15% 15%,
+      11% 7%
+    );
+  }
+}
+
+/* ─── Ultrawide ──────────────────────────────────────────────────────────── */
+
+@media (min-width: 1600px) {
+  .gch-sceneCopy {
+    max-width: 30rem;
+  }
+
+  .gch-headline {
+    font-size: 4rem;
+  }
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .gch-scene,
+  .gch-cta,
+  .gch-ctaArrow,
+  .gch-navInner,
+  .gch-playBtn {
+    transition: none !important;
+  }
+
+  .gch-parallaxLayer,
+  .gch-steamRibbon,
+  .gch-particle,
+  .gch-floatLeaf,
+  .gch-floatFlower,
+  .gch-foregroundFoliage,
+  .gch-beanAccent {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Narrow phones */
+@media (max-width: 379px) {
+  .gch-headline {
+    font-size: 1.75rem;
+  }
+
+  .gch-features {
+    gap: 0.45rem 0.75rem;
+  }
+
+  .gch-feature {
+    font-size: 0.64rem;
+  }
+
+  .gch-bottomBar {
+    bottom: 2.25rem;
+  }
+}

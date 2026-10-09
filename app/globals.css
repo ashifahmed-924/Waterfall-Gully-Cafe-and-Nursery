@@ -1,26 +1,469 @@
 @import "tailwindcss";
 
+/* ─── Brand tokens — morning garden cafe ─────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Moss canopy + espresso + honey — cool milk base, no purple */
+  --juniper: #3a6b52;
+  --juniper-dark: #1e3329;
+  --celadon: #8fb399;
+  --pale-celadon: #dce9df;
+  --clay-rose: #d07a68;
+  --deep-clay: #b35f4e;
+  --chalk: #f7f6f2;
+  --parchment: #eef3ec;
+  --safflower: #c9953a;
+  --wisteria: #6f8f78;
+  --basalt: #243028;
+
+  --gradient-cta: linear-gradient(
+    115deg,
+    #8fb399 0%,
+    #c9953a 52%,
+    #d07a68 100%
+  );
+  --gradient-cta-hover: linear-gradient(
+    115deg,
+    #c9953a 0%,
+    #d07a68 48%,
+    #3a6b52 100%
+  );
+
+  --shadow-soft: 0 14px 36px -18px rgb(30 51 41 / 0.32);
+  --shadow-lift: 0 22px 48px -20px rgb(30 51 41 / 0.42);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-organic: 42% 58% 55% 45% / 48% 42% 58% 52%;
+
+  --section-y: clamp(4rem, 8vw, 7rem);
+  --section-y-tight: clamp(2.5rem, 5vw, 4rem);
+  --content-max: 72rem;
+  --prose-max: 42rem;
+
+  --focus-ring: 2px solid var(--safflower);
+  --focus-offset: 3px;
+
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Tailwind v4 theme bridge ───────────────────────────────────────────── */
+@theme {
+  --color-juniper: var(--juniper);
+  --color-juniper-dark: var(--juniper-dark);
+  --color-celadon: var(--celadon);
+  --color-pale-celadon: var(--pale-celadon);
+  --color-clay-rose: var(--clay-rose);
+  --color-deep-clay: var(--deep-clay);
+  --color-chalk: var(--chalk);
+  --color-parchment: var(--parchment);
+  --color-safflower: var(--safflower);
+  --color-wisteria: var(--wisteria);
+  --color-basalt: var(--basalt);
+
+  --font-display: var(--font-fraunces), "Fraunces", ui-serif, Georgia, serif;
+  --font-body: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  --font-utility: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  --font-script: var(--font-caveat), "Caveat", "Segoe Script", cursive;
+  --font-mono: var(--font-figtree), "Figtree", system-ui, sans-serif;
+
+  --radius-organic: var(--radius-organic);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Base document ────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: color-mix(in srgb, var(--juniper) 18%, transparent);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    overflow-x: clip;
+    background-color: var(--chalk);
+    color: var(--basalt);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    color: var(--juniper-dark);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--juniper);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--deep-clay);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--safflower) 45%, white);
+    color: var(--juniper-dark);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Focus ────────────────────────────────────────────────────────────────── */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link:focus-visible {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  padding: 0.65rem 1rem;
+  background: var(--juniper-dark);
+  color: var(--chalk);
+  font-family: var(--font-utility);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+/* ─── CTA button ───────────────────────────────────────────────────────────── */
+.btn-garden {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.55rem;
+  border: none;
+  border-radius: 9999px;
+  background-color: var(--juniper);
+  background-image: var(--gradient-cta);
+  background-size: 160% 160%;
+  background-position: 0% 50%;
+  color: var(--juniper-dark);
+  font-family: var(--font-utility);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition:
+    background-position 0.45s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.btn-garden:hover {
+  background-image: var(--gradient-cta-hover);
+  background-position: 100% 50%;
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-1px);
+  color: var(--juniper-dark);
+  text-decoration: none;
+}
+
+.btn-garden:active {
+  transform: translateY(0);
+}
+
+.btn-garden:disabled,
+.btn-garden[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.4rem;
+  border: 1.5px solid color-mix(in srgb, var(--chalk) 70%, transparent);
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--juniper-dark) 42%, transparent);
+  color: var(--chalk);
+  font-family: var(--font-utility);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.btn-ghost:hover {
+  background: color-mix(in srgb, var(--juniper-dark) 58%, transparent);
+  border-color: var(--chalk);
+  color: var(--chalk);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-garden,
+  .btn-ghost {
+    transition: none;
+  }
+
+  .btn-garden:hover,
+  .btn-ghost:hover {
+    transform: none;
+  }
+}
+
+/* ─── Section rhythm ───────────────────────────────────────────────────────── */
+.section-rhythm {
+  padding-block: var(--section-y);
+}
+
+.section-rhythm-tight {
+  padding-block: var(--section-y-tight);
+}
+
+.section-inner {
+  width: min(100% - 2rem, var(--content-max));
+  margin-inline: auto;
+}
+
+.section-eyebrow {
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--juniper);
+}
+
+.section-lead {
+  max-width: var(--prose-max);
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  color: color-mix(in srgb, var(--basalt) 86%, var(--juniper));
+}
+
+.surface-parchment {
+  background-color: var(--parchment);
+}
+
+.surface-celadon {
+  background-color: var(--pale-celadon);
+}
+
+.surface-chalk {
+  background-color: var(--chalk);
+}
+
+.divider-botanical {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--celadon) 75%, var(--safflower)),
+    transparent
+  );
+}
+
+/* ─── Organic masks & shapes ───────────────────────────────────────────────── */
+.mask-organic {
+  border-radius: var(--radius-organic);
+  overflow: hidden;
+}
+
+.mask-organic-alt {
+  border-radius: 58% 42% 45% 55% / 52% 48% 52% 48%;
+  overflow: hidden;
+}
+
+.mask-soft-blob {
+  clip-path: ellipse(92% 88% at 50% 48%);
+}
+
+.mask-leaf-notch {
+  clip-path: polygon(
+    0% 8%,
+    8% 0%,
+    92% 0%,
+    100% 8%,
+    100% 92%,
+    92% 100%,
+    8% 100%,
+    0% 92%
+  );
+}
+
+.frame-organic {
+  padding: 0.35rem;
+  border-radius: var(--radius-organic);
+  background: var(--gradient-cta);
+}
+
+/* ─── Reduced motion helpers ───────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.motion-safe-only {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe-only {
+    display: none !important;
+  }
+}
+
+.motion-reduce-only {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-reduce-only {
+    display: block;
+  }
+}
+
+[data-animate="gsap"] {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate="gsap"] {
+    will-change: auto;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ─── Scrollbar (subtle) ───────────────────────────────────────────────────── */
+@supports selector(::-webkit-scrollbar) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: color-mix(in srgb, var(--parchment) 60%, var(--chalk));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--juniper) 40%, var(--celadon));
+    border: 2px solid var(--chalk);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--juniper) 60%, var(--celadon));
+  }
+}
+
+@supports (scrollbar-color: auto) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--juniper) 45%, var(--celadon))
+      var(--chalk);
+  }
+}
+
+/* Hide native scrollbar on swipe rails (dots / snap handle paging) */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* ─── Utility micro ────────────────────────────────────────────────────────── */
+.text-balance {
+  text-wrap: balance;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 50, "opsz" 72;
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-utility {
+  font-family: var(--font-utility);
+}
+
+.font-micro {
+  font-family: var(--font-utility);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
